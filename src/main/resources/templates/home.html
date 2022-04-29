@@ -5,18 +5,18 @@
 
 <body>
 
-    <nav th:replace="/fragments/nav"></nav>
+    <nav th:replace="/fragments/nav :: nav-front"></nav>
     
 
-    <main class="container">
-      <div class="bg-light p-5 rounded">
-        <h1>Navbar example</h1>
-        <p class="lead">This example is a quick exercise to illustrate how the top-aligned navbar works. As you scroll, this navbar remains in its original position and moves with the rest of the page.</p>
-        <a class="btn btn-lg btn-primary" href="/docs/5.1/components/navbar/" role="button">View navbar docs &raquo;</a>
-      </div>
-    </main>
+    <div class="container">
+        <div class="row">
+           <div class="col">
+              <h1>Spring Boot</h1>
+           </div> 
+        </div>
+    </div>
 
     <footer th:replace="/fragments/footer"></footer>
     
 </body>
-</html>
+</html> 
