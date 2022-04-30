@@ -16,4 +16,4 @@ public interface PageRepository extends JpaRepository<Page, Integer>{
    List<Page> findAll();
 
     
-}
+}  

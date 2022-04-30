@@ -12,19 +12,23 @@
         <a href="/admin/pages/add" class="btn btn-primary mb-5">Add new</a>
 
         <div th:if="${!pages.empty}">
-            <table class="table">
+            <table class="table table-bordered">
+                
                 <tr>
                     <th>Title</th>
                     <th>Slug</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
+                
+                
                 <tr th:each="page: ${pages}">
                     <td th:text="${page.title}"></td>
                     <td th:text="${page.slug}"></td>
                     <td><a th:href="@{'/admin/pages/edit/' + ${page.id}}">Edit</a></td>
                     <td><a th:href="@{'/admin/pages/delete/' + ${page.id}}">Delete</a></td>
                 </tr>
+                 
             </table>
         </div>
 
