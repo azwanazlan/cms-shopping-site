@@ -1,10 +1,11 @@
 package com.azwanazlan.cmsshoppingcart.models;
 
-import java.util.List;
+
 
 import com.azwanazlan.cmsshoppingcart.models.data.Page;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+
 
 
 /**
@@ -12,8 +13,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface PageRepository extends JpaRepository<Page, Integer>{
 
-   @Override
-   List<Page> findAll();
+        Page findBySlug(String slug);
+        
+       // @Query("Select p FROM Page p Where p.id != :id and p.slug = :slug")
+        //Page findBySlug(int id, String slug);
 
-    
-}  
+        Page findBySlugAndIdNot(String slug, int id);
+}       
