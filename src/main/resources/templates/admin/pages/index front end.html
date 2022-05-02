@@ -1,0 +1,53 @@
+
+<!doctype html>
+<html lang="en">
+<head th:replace="/fragments/head"></head>
+
+<body>
+
+    <nav th:replace="/fragments/nav :: nav-admin"></nav>
+    
+    <div class="container">
+        <h1 class="display-5 mb-5">Pages editor</h1>
+        <a href="/admin/pages/add" class="btn btn-primary mb-5">Add new</a> 
+        <div th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}"></div>
+
+        <div th:if="${!pages.empty}">
+            <table class="table table-borderless table-responsive card-1 p-4">
+                <thead>
+                    <tr class="border-bottom">
+                        <th> <span class="ml-2">Title</span> </th>
+                        <th> <span class="ml-2">Slug</span> </th>
+                        <th> <span class="ml-2">Edit</span> </th>
+                        <th> <span class="ml-2">Delete</span> </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="border-bottom" th:each="page: ${pages}">
+                        <td>
+                            <div class="p-2"> <span class="d-block font-weight-bold" th:text="${page.title}"></div>
+                        </td>
+                        <td>
+                            <div class="p-2"> <span class="d-block font-weight-bold" th:text="${page.slug}"></div>
+                        </td>
+                        <td>
+                            <a th:href="@{'/admin/pages/edit/' + ${page.id}}"> <span class="font-weight-bold" >Edit</span> </a>
+                        </td>
+                        <td>
+                            <a th:if="${page.slug != 'home'}" th:href="@{'/admin/pages/delete/' + ${page.id}}" class="confirmDeletion"> <span class="font-weight-bold" >Delete</span> </a>
+                        </td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+
+        <div th:unless="${!pages.empty}">
+            <h4 class="display-4">There are no pages at the moment</h4>
+        </div>
+    </div>
+   
+    <div th:replace="/fragments/footer"></div>
+    
+</body>
+</html>

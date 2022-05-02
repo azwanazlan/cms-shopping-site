@@ -9,24 +9,26 @@
     
     <div class="container">
         <h1 class="display-5 mb-5">Pages editor</h1>
-        <a href="/admin/pages/add" class="btn btn-primary mb-5">Add new</a>
+        <a href="/admin/pages/add" class="btn btn-primary mb-5">Add new</a> 
+        <div th:if="${message}" th:text="${message}" th:class="${'alert ' + alertClass}"></div>
 
         <div th:if="${!pages.empty}">
-            <table class="table table-bordered">
+            <table class="table sorting" id="pages">
+                <thead class="table-dark">
                 
-                <tr>
+                <tr class="home">
                     <th>Title</th>
                     <th>Slug</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
+                </thead>
                 
-                
-                <tr th:each="page: ${pages}">
+                <tr th:each="page: ${pages}" th:id="'id_' + ${page.id}" th:class="${page.slug}">
                     <td th:text="${page.title}"></td>
                     <td th:text="${page.slug}"></td>
                     <td><a th:href="@{'/admin/pages/edit/' + ${page.id}}">Edit</a></td>
-                    <td><a th:href="@{'/admin/pages/delete/' + ${page.id}}">Delete</a></td>
+                    <td><a th:if="${page.slug != 'home'}" th:href="@{'/admin/pages/delete/' + ${page.id}}" class="confirmDeletion">Delete</a></td>
                 </tr>
                  
             </table>
@@ -38,6 +40,26 @@
     </div>
    
     <div th:replace="/fragments/footer"></div>
+
+    <script>
+        $("table#pages tbody").sortable({
+            items: "tr:not(.home)",
+            placeholder: "ui-state-highlight",
+            update: function() {
+                let ids = $("table#pages tbody").sortable("serialize");
+                let url = "/admin/pages/reorder";
+
+                $.post(url, ids, function(data) {
+                    console.log(data);
+                    
+
+                });
+
+                
+
+            }
+        });
+    </script>
     
 </body>
 </html>
