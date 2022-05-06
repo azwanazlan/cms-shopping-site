@@ -24,7 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/admin/categories")
 public class AdminCategoriesController {
-    
+    //
     @Autowired
     private CategoryRepository categoryRepo;
 

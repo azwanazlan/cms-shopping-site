@@ -33,6 +33,7 @@ public class Product {
     @Size(min=5, message = "Description must be at least 5 characters long")
     private String description;
     
+
     private String image;
    
     @Pattern(regexp = "^[0-9]+([.][0-9]{1,2})?", message = "Expected format: 5, 5.99, 15.99")

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -19,8 +20,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -40,15 +43,27 @@ public class AdminproductsController {
     public String index(Model model) {
 
         List<Product> products = productRepo.findAll();
+        List<Category> categories = categoryRepo.findAll();
+       
+        HashMap<Integer, String> cats = new HashMap<>();
+        for (Category cat : categories){
+            cats.put(cat.getId(), cat.getName());
+        }
+
         model.addAttribute("products", products);
+        model.addAttribute("cats", cats);
+
         return "admin/products/index";
 
     }
     @GetMapping("/add")
     public String add(@ModelAttribute Product product, Model model) { //Model model is because of category_id   //Product product is for th:object${product}
 
-        List<Category> categories = categoryRepo.findAll();
-        model.addAttribute("categories", categories);
+    List<Category> categories = categoryRepo.findAll();
+       
+    model.addAttribute("categories", categories);
+        
+    
 
         
         return "admin/products/add";
@@ -56,23 +71,27 @@ public class AdminproductsController {
     }
 
     @PostMapping("/add")
-    public String add(@Valid Product product, 
-                        BindingResult bindingResult, 
-                        MultipartFile file, 
-                        RedirectAttributes redirectAttributes, 
-                        Model model) throws IOException { //file is for th:name="file"
-
+    public String add(@Valid Product product, BindingResult bindingResult, MultipartFile file, RedirectAttributes redirectAttributes, Model model ) throws IOException { //file is for th:name="file"
+        
+        List<Category> categories = categoryRepo.findAll();
+    
+        
         if (bindingResult.hasErrors()) {
+            model.addAttribute("categories", categories);
             return "admin/products/add";
         }
 
         boolean fileOK = false;
         byte[] bytes = file.getBytes();
         String filename = file.getOriginalFilename();
+     
         Path path = Paths.get("src/main/resources/static/media/" + filename);
 
+
+        
         if (filename.endsWith("jpg") || filename.endsWith("png") ) {
             fileOK = true;
+    
         }
 
         redirectAttributes.addFlashAttribute("message", "Product added");
@@ -83,14 +102,19 @@ public class AdminproductsController {
         
         Product productExists = productRepo.findBySlug(slug);
 
-        if (! fileOK ){
+        
+
+        if ( ! fileOK ) {
             redirectAttributes.addFlashAttribute("message", "Image must be a jpg or png");
             redirectAttributes.addFlashAttribute("alertClass","alert-danger");
+            redirectAttributes.addFlashAttribute("product", product);
+
         }
 
-        if ( productExists != null ) {
+        else if ( productExists != null ) {
             redirectAttributes.addFlashAttribute("message", "Product exists, choose another");
             redirectAttributes.addFlashAttribute("alertClass","alert-danger");
+            redirectAttributes.addFlashAttribute("product", product);
             
         } else  { 
             product.setSlug(slug);
@@ -101,6 +125,19 @@ public class AdminproductsController {
 
         return "redirect:/admin/products/add";
     }
+    
+    @GetMapping("/delete/{id}")
+    public String edit(@PathVariable int id, RedirectAttributes redirectAttributes){
+
+        productRepo.deleteById(id);
+        redirectAttributes.addFlashAttribute("message", "Product deleted");
+        redirectAttributes.addFlashAttribute("alertClass","alert-success");
+      
+
+        return "redirect:/admin/products";
+
+    }
+    
 
 }
 
