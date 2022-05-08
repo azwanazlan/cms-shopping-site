@@ -63,10 +63,7 @@ public class AdminproductsController {
        
     model.addAttribute("categories", categories);
         
-    
-
-        
-        return "admin/products/add";
+    return "admin/products/add";
     
     }
 
@@ -74,7 +71,7 @@ public class AdminproductsController {
     public String add(@Valid Product product, BindingResult bindingResult, MultipartFile file, RedirectAttributes redirectAttributes, Model model ) throws IOException { //file is for th:name="file"
         
         List<Category> categories = categoryRepo.findAll();
-    
+
         
         if (bindingResult.hasErrors()) {
             model.addAttribute("categories", categories);
@@ -84,9 +81,9 @@ public class AdminproductsController {
         boolean fileOK = false;
         byte[] bytes = file.getBytes();
         String filename = file.getOriginalFilename();
-     
         Path path = Paths.get("src/main/resources/static/media/" + filename);
 
+        
 
         
         if (filename.endsWith("jpg") || filename.endsWith("png") ) {
@@ -120,7 +117,10 @@ public class AdminproductsController {
             product.setSlug(slug);
             product.setImage(filename);
             productRepo.save(product);
-            Files.write(path, bytes);
+            //String filename2 = product.getId() + "_" + filename;
+
+            //Path path = Paths.get("src/main/resources/static/media/" + filename2);
+            Files.write(path , bytes);
         } 
 
         return "redirect:/admin/products/add";
@@ -222,9 +222,15 @@ public class AdminproductsController {
     }
 
     @GetMapping("/delete/{id}")
-    public String edit(@PathVariable int id, RedirectAttributes redirectAttributes){
+    public String delete( @PathVariable int id, RedirectAttributes redirectAttributes) throws IOException {
+
+        Product product = productRepo.getById(id);
+        Product currentProduct = productRepo.getById(product.getId());
+
 
         productRepo.deleteById(id);
+        Path path2 = Paths.get("src/main/resources/static/media/" + currentProduct.getImage());
+        Files.delete(path2);
         redirectAttributes.addFlashAttribute("message", "Product deleted");
         redirectAttributes.addFlashAttribute("alertClass","alert-success");
       
