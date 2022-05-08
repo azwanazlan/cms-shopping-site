@@ -25,12 +25,12 @@
 
             <div class="form-group mb-3">
                 <label for="">Description</label>
-                <textarea type="text" class="form-control" rows="10" th:field="*{description}" placeholder="description"></textarea>
+                <textarea type="text" class="form-control" rows="10" th:field="*{description}" placeholder="Description"></textarea>
                 <span class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
             </div>
 
             <div class="form-group mb-3">
-                <label for="">Image</label>
+                <label for="">Image (JPG or PNG)</label>
                 <input type="file" class="form-control mb-3" th:name="file" th:id="file">
                 <img class="mt-2" src="#" alt="" id="imgPreview1">
                 
@@ -38,7 +38,7 @@
             </div>
    
             <div class="form-group">
-                <label for="">Price(RM)</label>
+                <label for="">Price (RM)</label>
                 <input type="text" class="form-control" th:field="*{price}" placeholder="20 or 20.99">
                 <span class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
             </div>
