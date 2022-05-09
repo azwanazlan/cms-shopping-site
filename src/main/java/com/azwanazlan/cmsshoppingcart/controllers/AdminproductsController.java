@@ -75,6 +75,8 @@ public class AdminproductsController {
         return "admin/products/index";
 
     }
+
+    
     @GetMapping("/add")
     public String add(@ModelAttribute Product product, Model model) { //Model model is because of category_id   //Product product is for th:object${product}
 
