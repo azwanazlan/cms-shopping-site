@@ -1,13 +1,13 @@
-package com.azwanazlan.cmsshoppingcart.controllers;
+//package com.azwanazlan.cmsshoppingcart.controllers;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.stereotype.Controller;
+//import org.springframework.web.bind.annotation.GetMapping;
 
-@Controller //identify this class as a component scanning
-public class HomeController {
+//@Controller //identify this class as a component scanning
+//public class HomeController {
     
-    @GetMapping("/")
-    public String home() {
-        return "home";
-    }
-}
+   // @GetMapping("/")
+    //public String home() {
+        //return "home";
+   // }
+//}
