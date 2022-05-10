@@ -23,3 +23,7 @@ div.productAdded {
 .hide {
     display: none;
 }
+
+tr.noBorder td {
+    border: 0;
+  }
