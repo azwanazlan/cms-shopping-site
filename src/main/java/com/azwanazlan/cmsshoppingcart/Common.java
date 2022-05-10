@@ -39,7 +39,7 @@ if (session.getAttribute("cart")!= null) {
     int size = 0;
     double total = 0;
 
-    for(Cart value :cart.values()) {
+    for (Cart value : cart.values()) {
         size += value.getQuantity();
         total += value.getQuantity() * Double.parseDouble(value.getPrice());
     }
@@ -49,7 +49,7 @@ if (session.getAttribute("cart")!= null) {
 
     cartActive = true;
 
-
+ 
 }
         model.addAttribute("cpages", pages);
         model.addAttribute("categories", categories);

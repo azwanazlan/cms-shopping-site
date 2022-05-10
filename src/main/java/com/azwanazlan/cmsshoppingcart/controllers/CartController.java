@@ -8,6 +8,7 @@ import com.azwanazlan.cmsshoppingcart.models.Cart;
 import com.azwanazlan.cmsshoppingcart.models.ProductRepository;
 import com.azwanazlan.cmsshoppingcart.models.data.Product;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,10 +20,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @SuppressWarnings("unchecked")
 public class CartController {
     
+    @Autowired
     private ProductRepository productRepo;
 
     @GetMapping("/add/{id}")
-    public String add(@PathVariable int id, HttpSession session, Model model) {
+    public String add(@PathVariable int id, HttpSession session, Model model) { 
 
         Product product = productRepo.getById(id);
 
@@ -42,7 +44,7 @@ public class CartController {
                 cart.put(id, new Cart(id, product.getName(), product.getPrice(), ++qty, product.getImage()));
             
             } else {
-                
+                 
                 cart.put(id, new Cart(id, product.getName(), product.getPrice(), 1, product.getImage()));
                 session.setAttribute("cart", cart);
             
@@ -55,7 +57,7 @@ public class CartController {
         int size = 0;
         double total = 0;
 
-        for(Cart value :cart.values()) {
+        for(Cart value : cart.values()) {
             size += value.getQuantity();
             total += value.getQuantity() * Double.parseDouble(value.getPrice());
         }
@@ -63,6 +65,24 @@ public class CartController {
         model.addAttribute("size", size);
         model.addAttribute("total", total);
 
-        return "cart/view";
+        return "cart_view";
+    }
+
+    @RequestMapping("/view")
+    public String view(HttpSession session, Model model) {
+
+        if (session.getAttribute("cart") == null) {
+            return "redirect:/";
+        }
+
+        HashMap<Integer, Cart> cart = (HashMap<Integer, Cart>)session.getAttribute("cart");
+        model.addAttribute("cart", cart);
+
+
+
+
+
+
+        return "cart";
     }
 }

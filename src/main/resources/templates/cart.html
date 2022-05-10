@@ -1,0 +1,36 @@
+
+<!doctype html>
+<html lang="en">
+<head th:replace="/fragments/head"></head>
+
+<body>
+
+    <nav th:replace="/fragments/nav :: nav-front"></nav>
+    
+
+    <div class="container-fluid mt-5">
+        <div class="row">
+        <div th:replace="/fragments/categories"></div>
+           <div class="col"></div> 
+           <div class="col-7"></div>
+           <h2 class="display-4">Cart Overview</h2>
+           <table class="table">
+                <tr>
+                    <th>Product</th>
+                    <th>Image</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+                <tr th:each="el : ${cart}">
+                    <td th:text="${el}"></td>
+
+                </tr>
+           </table>
+    </div>
+    
+
+    <footer th:replace="/fragments/footer"></footer>
+    
+</body>
+</html>     
