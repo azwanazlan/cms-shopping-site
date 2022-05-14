@@ -27,3 +27,8 @@ div.productAdded {
 tr.noBorder td {
     border: 0;
   }
+
+  form#paypalform {
+      position: absolute;
+      left:-3000px;
+  }
