@@ -1,5 +1,9 @@
 package com.azwanazlan.cmsshoppingcart.security;
 
+import com.azwanazlan.cmsshoppingcart.models.UserRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -7,4 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/register")
 public class RegistrationController {
     
+    @Autowired
+    private UserRepository userRepo;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 }
