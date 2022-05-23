@@ -30,11 +30,11 @@ public class Common {
     public void sharedData(Model model, HttpSession session, Principal principal) {
 
         if(principal != null) {
-            model.addAttribute("user", principal.getName());
+            model.addAttribute("principal", principal.getName());
         }
         
         List<Page> pages = pageRepo.findAllByOrderBySortingAsc();
-        List<Category> categories = categoryRepo.findAll();
+        List<Category> categories = categoryRepo.findAllByOrderBySortingAsc();
 
 boolean cartActive = false;
 

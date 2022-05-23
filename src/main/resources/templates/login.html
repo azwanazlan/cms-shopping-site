@@ -16,6 +16,7 @@
 
             <h3 class="display-4">Login</h3>
            
+            <div class="class alert-danger" th:if="${param.error}">Invalid credential</div>
             <form method="post" th:action="@{/login}">
 
               
@@ -26,7 +27,7 @@
     
                 <div class="form-group mb-3">
                     <label for="">Password:</label>
-                    <input type="password" class="form-control" name="password" id="password">
+                    <input type="password" class="form-control" name="password" id="password" placeholder="password">
                 </div>
       
                 
