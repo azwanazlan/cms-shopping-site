@@ -1,6 +1,5 @@
 # Project Title
-This is my self project to practise developement skill to 
-develop CMS Shopping Site using Spring Boot framework
+This is a self project about develop CMS Shopping Site using Spring Boot framework
 
 What included in this projects:
 - CMS and Shopping Cart website with admin login security 
