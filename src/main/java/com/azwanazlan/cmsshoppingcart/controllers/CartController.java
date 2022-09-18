@@ -27,9 +27,9 @@ public class CartController {
 
     @GetMapping("/add/{id}")
     public String add(@PathVariable int id, 
-                        HttpSession session,
-                        Model model,
-                        @RequestParam(value="cartPage", required = false) String cartPage) { 
+                       HttpSession session,
+                       Model model,
+                      @RequestParam(value="cartPage", required = false) String cartPage) { 
 
         Product product = productRepo.getById(id);
 
